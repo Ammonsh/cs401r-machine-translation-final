@@ -1,0 +1,300 @@
+BLEU:
+sacrebleu [reference path] -i [pred path] -m bleu -b -w 4 -tok none
+-b is the score only flag
+-w is the precision of the score
+-tok is the tokenizer
+
+This fixed a problem with sacrebleu: https://github.com/hemingkx/ChineseNMT/issues/10
+
+Process for translating, decoding, and then evaluating (from the complete directory)
+
+########################################################
+                    KHMER -> ENGLISH
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/english/km-en-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-km-en-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-km-en-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-km-en-test.txt
+sacrebleu ../cleaned-tokenized-tagged/english/km-en-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-km-en-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/english/km-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-en-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/english/km-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-en-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (km-en)
+onmt_translate -model run/km_en_model_step_100000.pt -src ../cleaned-tokenized/english/km-en-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-km-en-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-km-en-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-km-en-test.txt
+sacrebleu ../cleaned-tokenized-tagged/english/km-en-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-km-en-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/english/km-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-en-test.txt -m bleu chrf -b -w 4
+
+########################################################
+                    LAO -> ENGLISH
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/english/lo-en-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-lo-en-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-lo-en-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-lo-en-test.txt
+sacrebleu ../cleaned-tokenized-tagged/english/lo-en-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-lo-en-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/english/lo-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-en-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/english/lo-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-en-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (lo-en)
+onmt_translate -model run/lo_en_model_step_100000.pt -src ../cleaned-tokenized/english/lo-en-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-lo-en-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-lo-en-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-lo-en-test.txt
+sacrebleu ../cleaned-tokenized-tagged/english/lo-en-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-lo-en-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/english/lo-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-en-test.txt -m bleu chrf -b -w 4
+
+
+########################################################
+                    THAI -> ENGLISH
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/english/th-en-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-th-en-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-th-en-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-th-en-test.txt
+sacrebleu ../cleaned-tokenized-tagged/english/th-en-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-th-en-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/english/th-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-en-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/english/th-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-en-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (th-en)
+onmt_translate -model run/th_en_model_step_100000.pt -src ../cleaned-tokenized/english/th-en-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-th-en-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-th-en-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-th-en-test.txt
+sacrebleu ../cleaned-tokenized-tagged/english/th-en-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-th-en-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/english/th-en-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-en-test.txt -m bleu chrf -b -w 4
+
+
+########################################################
+                    ENGLISH -> KHMER
+########################################################
+
+Complete Model:
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/khmer/en-km-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-en-km-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-en-km-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-en-km-test.txt
+sacrebleu ../cleaned-tokenized-tagged/khmer/en-km-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-en-km-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/khmer/en-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-km-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/khmer/en-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-km-test.txt -m bleu chrf -b -w 4 -tok char
+
+
+Bilingual Model:
+# Make sure you're in the right directory (en-km)
+onmt_translate -model run2/en_km_model_step_100000.pt -src ../cleaned-tokenized/khmer/en-km-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-en-km-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-en-km-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-en-km-test.txt
+sacrebleu ../cleaned-tokenized-tagged/khmer/en-km-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-en-km-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/khmer/en-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-km-test.txt -m bleu chrf -b -w 4
+
+########################################################
+                    LAO -> KHMER
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/khmer/lo-km-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-lo-km-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-lo-km-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-lo-km-test.txt
+sacrebleu ../cleaned-tokenized-tagged/khmer/lo-km-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-lo-km-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/khmer/lo-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-km-test.txt -m bleu chrf -b -w 4
+
+Bilingual Model:
+# Make sure you're in the right directory (lo-km)
+onmt_translate -model run/lo_km_model_step_100000.pt -src ../cleaned-tokenized/khmer/lo-km-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-lo-km-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-lo-km-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-lo-km-test.txt
+sacrebleu ../cleaned-tokenized-tagged/khmer/lo-km-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-lo-km-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/khmer/lo-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-km-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/khmer/lo-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-km-test.txt -m bleu chrf -b -w 4 -tok char
+
+
+
+########################################################
+                    THAI -> KHMER
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/khmer/th-km-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-th-km-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-th-km-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-th-km-test.txt
+sacrebleu ../cleaned-tokenized-tagged/khmer/th-km-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-th-km-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/khmer/th-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-km-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/khmer/th-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-km-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (th-km)
+onmt_translate -model run/th_km_model_step_100000.pt -src ../cleaned-tokenized/khmer/th-km-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-th-km-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-th-km-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-th-km-test.txt
+sacrebleu ../cleaned-tokenized-tagged/khmer/th-km-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-th-km-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/khmer/th-km-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-km-test.txt -m bleu chrf -b -w 4
+
+########################################################
+                    ENGLISH -> LAO
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/lao/en-lo-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-en-lo-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-en-lo-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-en-lo-test.txt
+sacrebleu ../cleaned-tokenized-tagged/lao/en-lo-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-en-lo-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/lao/en-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-lo-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/lao/en-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-lo-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (en-lo)
+onmt_translate -model run2/en_lo_model_step_100000.pt -src ../cleaned-tokenized/lao/en-lo-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-en-lo-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-en-lo-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-en-lo-test.txt
+sacrebleu ../cleaned-tokenized-tagged/lao/en-lo-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-en-lo-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/lao/en-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-lo-test.txt -m bleu chrf -b -w 4
+
+########################################################
+                    KHMER -> LAO
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/lao/km-lo-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-km-lo-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-km-lo-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-km-lo-test.txt
+sacrebleu ../cleaned-tokenized-tagged/lao/km-lo-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-km-lo-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/lao/km-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-lo-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/lao/km-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-lo-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (km-lo)
+onmt_translate -model run/km_lo_model_step_100000.pt -src ../cleaned-tokenized/lao/km-lo-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-km-lo-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-km-lo-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-km-lo-test.txt
+sacrebleu ../cleaned-tokenized-tagged/lao/km-lo-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-km-lo-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/lao/km-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-lo-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/lao/km-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-lo-test.txt -m bleu chrf -b -w 4 -tok char
+
+########################################################
+                    THAI -> LAO
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/lao/th-lo-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-th-lo-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-th-lo-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-th-lo-test.txt
+sacrebleu ../cleaned-tokenized-tagged/lao/th-lo-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-th-lo-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/lao/th-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-lo-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/lao/th-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-lo-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (th-lo)
+onmt_translate -model run/th_lo_model_step_100000.pt -src ../cleaned-tokenized/lao/th-lo-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-th-lo-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-th-lo-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-th-lo-test.txt
+sacrebleu ../cleaned-tokenized-tagged/lao/th-lo-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-th-lo-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/lao/th-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-lo-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/lao/th-lo-test.tgt -i test_set_evaluations/decoded_test_pred/pred-th-lo-test.txt -m bleu chrf -b -w 4 -tok char
+
+########################################################
+                    ENGLISH -> THAI
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/thai/en-th-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-en-th-test.txt.sp
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-en-th-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-en-th-test.txt
+sacrebleu ../cleaned-tokenized-tagged/thai/en-th-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-en-th-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/thai/en-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-th-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/thai/en-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-th-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (en-th)
+onmt_translate -model run/en_th_model_step_100000.pt -src ../cleaned-tokenized/thai/en-th-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-en-th-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-en-th-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-en-th-test.txt
+sacrebleu ../cleaned-tokenized-tagged/thai/en-th-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-en-th-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/thai/en-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-en-th-test.txt -m bleu chrf -b -w 4
+
+########################################################
+                    KHMER -> THAI
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/thai/km-th-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-km-th-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-km-th-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-km-th-test.txt
+sacrebleu ../cleaned-tokenized-tagged/thai/km-th-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-km-th-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/thai/km-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-th-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/thai/km-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-th-test.txt -m bleu chrf -b -w 4 -tok char
+
+Bilingual Model:
+# Make sure you're in the right directory (km-th)
+onmt_translate -model run/km_th_model_step_100000.pt -src ../cleaned-tokenized/thai/km-th-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-km-th-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-km-th-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-km-th-test.txt
+sacrebleu ../cleaned-tokenized-tagged/thai/km-th-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-km-th-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/thai/km-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-km-th-test.txt -m bleu chrf -b -w 4
+
+########################################################
+                    LAO -> THAI
+########################################################
+
+onmt_translate -model run2/complete_model_step_500000.pt -src ../cleaned-tokenized-tagged/thai/lo-th-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-lo-th-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-lo-th-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-lo-th-test.txt
+sacrebleu ../cleaned-tokenized-tagged/thai/lo-th-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-lo-th-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/thai/lo-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-th-test.txt -m bleu chrf -b -w 4
+sacrebleu ../cleaned-tagged/thai/lo-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-th-test.txt -m bleu chrf -b -w 4 -tok char
+
+
+Bilingual Model:
+# Make sure you're in the right directory (lo-th)
+onmt_translate -model run/lo_th_model_step_100000.pt -src ../cleaned-tokenized/thai/lo-th-test.src.sp -output test_set_evaluations/tokenized_test_pred/pred-lo-th-test.txt.sp -gpu 0
+spm_decode -model=../all.model -input_format=piece < test_set_evaluations/tokenized_test_pred/pred-lo-th-test.txt.sp > test_set_evaluations/decoded_test_pred/pred-lo-th-test.txt
+sacrebleu ../cleaned-tokenized-tagged/thai/lo-th-test.tgt.sp -i test_set_evaluations/tokenized_test_pred/pred-lo-th-test.txt.sp -m bleu -b -w 4 -tok none
+
+Try it with detokenized versions:
+sacrebleu ../cleaned-tagged/thai/lo-th-test.tgt -i test_set_evaluations/decoded_test_pred/pred-lo-th-test.txt -m bleu chrf -b -w 4
+
+###############################################################################################################
+Complete Scores:
+km-en - 39.3205 (kept tokenized), 42.7593 (detokenized with default sb tokenizer), detokenized chrf: 0.61014, 65.2730 (detokenized then sb tokenize with char)
+lo-en - 48.1061 (kept tokenized), 49.0627 (detokenized with default sb tokenizer), detokenized chrf: 0.65368, 69.4394
+th-en - 38.3404 (kept tokenized), 40.7544 (detokenized with default sb tokenizer), detokenized chrf: 0.59907, 64.1916
+en-km - 28.7855 (kept tokenized), detokenized chrf: 0.42780, 47.0178
+lo-km - 28.9743 (kept tokenized), detokenized chrf: 0.42975, 47.2781
+th-km - 27.6675 (kept tokenized), detokenized chrf: 0.40214, 44.2586
+en-lo - 52.6022 (kept tokenized), detokenized chrf: 0.38480, 42.3720
+km-lo - 46.4087 (kept tokenized), detokenized chrf: 0.38114, 41.8143
+th-lo - 52.7720 (kept tokenized), detokenized chrf: 0.36878, 40.4931
+en-th - 33.9973 (kept tokenized), 42.4910 (detokeized with default sb tokenizer), detokenized chrf: 0.59519, 63.4113
+km-th - 36.5176 (kept tokenized), 47.4965 (detokeized with default sb tokenizer), detokenized chrf: 0.61000, 65.0960
+lo-th - 44.7113 (kept tokenized), 43.6385 (detokeized with default sb tokenizer), detokenized chrf: 0.66085, 70.1657
+
+Bilingual Scores:
+en-km - 40.4029 (kept tokenized), detokenized chrf: 0.48769
+en-lo - 49.1947 (kept tokenized), detokenized chrf: 0.37258
+lo-km - 27.9990 (kept tokenized), detokenized chrf: 0.40634
+lo-th - 45.0644 (kept tokenized), 44.6739 (detokeized with default sb tokenizer), detokenized chrf: 0.64451, 68.6069
+th-km - 35.7995 (kept tokenized), detokenized chrf: 0.43451, 48.1708
+km-lo - 37.9886 (kept tokenized), detokenized chrf: 0.34320, 37.3822
+th-lo - 48.7799 (kept tokenized), detokenized chrf: 0.35332, 38.9313
+
+km-en - 58.3094, 0.73336
+lo-en - 51.0792, 0.66208
+th-en - 55.9577, 0.71560
+en-th - 51.0644, 0.70651
+km-th - 45.1759, 0.65983

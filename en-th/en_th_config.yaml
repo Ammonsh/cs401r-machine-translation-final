@@ -1,0 +1,90 @@
+## Where the samples will be written
+save_data: run/samples
+
+# Prevent overwriting existing files in the folder
+overwrite: False
+
+# Vocabulary files
+src_vocab: run/vocab.src
+tgt_vocab: run/vocab.tgt
+
+# Tokenization options
+# src_subword_type: sentencepiece
+# src_subword_model: ../SentencePiece/English/enm.model
+# tgt_subword_type: sentencepiece
+# tgt_subword_model: ../SentencePiece/Lao/lom.model
+
+# # Number of candidates for SentencePiece sampling
+# subword_nbest: 1
+# # Smoothing parameter for SentencePiece sampling
+# subword_alpha: 0.0
+
+# Specific arguments for pyonmttok
+#src_onmttok_kwargs: "{'mode': 'none', 'spacer_annotate': True}"
+#tgt_onmttok_kwargs: "{'mode': 'none', 'spacer_annotate': True}"
+
+# Corpus opts:
+data:
+    corpus_1:
+        path_src: ../cleaned-tokenized/thai/en-th-train.src.sp
+        path_tgt: ../cleaned-tokenized/thai/en-th-train.tgt.sp
+        #transforms: [onmt_tokenize, filtertoothng]
+    valid:
+        path_src: ../cleaned-tokenized/thai/en-th-val.src.sp
+        path_tgt: ../cleaned-tokenized/thai/en-th-val.tgt.sp
+        #transforms: [onmt_tokenize]
+
+
+# Train on a single GPU
+world_size: 1
+gpu_ranks: [0]
+
+# Where to save the checkpoints
+save_model: run/en_th_model
+save_checkpoint_steps: 5000
+train_steps: 100000
+valid_steps: 5000
+report_every: 1000
+keep_checkpoint: 10
+
+# Optimization
+model_dtype: "fp32"
+optim: "adam"
+learning_rate: 2
+valid_batch_size: 3072
+decay_method: "noam"
+batch_size: 3072
+batch_type: tokens
+normalization: tokens
+label_smoothing: 0.1
+
+# Model
+encoder_type: transformer
+decoder_type: transformer
+position_encoding: true
+enc_layers: 6
+dec_layers: 6
+heads: 8
+rnn_size: 512
+word_vec_size: 512
+transformer_ff: 2048
+dropout_steps: [0]
+dropout: [0.1]
+attention_dropout: [0.1]
+
+
+#save_checkpoint_steps: 1000
+#valid_steps: 2000
+# train_steps: 100000
+# seed: 1
+# report_every: 1000
+# keep_checkpoint: 10
+
+# rnn_size: 512
+# batch_size: 64
+# learning_rate: 0.001
+
+skip_empty_level: silent
+
+# world_size: 1
+# gpu_ranks: [0]

@@ -1,0 +1,10 @@
+python test.py cleaned-tagged/english/th-en
+python test.py cleaned-tagged/khmer/en-km
+python test.py cleaned-tagged/khmer/lo-km
+python test.py cleaned-tagged/khmer/th-km
+python test.py cleaned-tagged/lao/en-lo
+python test.py cleaned-tagged/lao/km-lo
+python test.py cleaned-tagged/lao/th-lo
+python test.py cleaned-tagged/thai/en-th
+python test.py cleaned-tagged/thai/km-th
+python test.py cleaned-tagged/thai/lo-th
